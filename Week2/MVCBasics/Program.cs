@@ -4,12 +4,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-//register the service with the services container
-builder.Services.AddSingleton<IEncryptionService, EncryptionService>();
+//add our own service
+//builder.Service.AddSingleton<Interface,ConcreteClass>
+builder.Services.AddSingleton<IDiceRoller, DiceRoller>();
 
 var app = builder.Build();
-
-//Console.WriteLine(builder.Configuration["EncryptKey"]);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

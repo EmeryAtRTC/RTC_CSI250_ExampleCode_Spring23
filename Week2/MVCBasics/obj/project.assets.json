@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jemery\\OneDrive - Renton Technical College\\CSI-250\\ExampleRepo\\RTC_CSI250_ExampleCode_Spring23\\Week2\\MVCBasics\\MVCBasics.csproj",
+      "projectUniqueName": "C:\\Users\\jemery\\OneDrive - Renton Technical College\\CSI-250\\Week2\\MVCBasics\\MVCBasics\\MVCBasics.csproj",
       "projectName": "MVCBasics",
-      "projectPath": "C:\\Users\\jemery\\OneDrive - Renton Technical College\\CSI-250\\ExampleRepo\\RTC_CSI250_ExampleCode_Spring23\\Week2\\MVCBasics\\MVCBasics.csproj",
+      "projectPath": "C:\\Users\\jemery\\OneDrive - Renton Technical College\\CSI-250\\Week2\\MVCBasics\\MVCBasics\\MVCBasics.csproj",
       "packagesPath": "C:\\Users\\jemery\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jemery\\OneDrive - Renton Technical College\\CSI-250\\ExampleRepo\\RTC_CSI250_ExampleCode_Spring23\\Week2\\MVCBasics\\obj\\",
+      "outputPath": "C:\\Users\\jemery\\OneDrive - Renton Technical College\\CSI-250\\Week2\\MVCBasics\\MVCBasics\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jemery\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -64,7 +64,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

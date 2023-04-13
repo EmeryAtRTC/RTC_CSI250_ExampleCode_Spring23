@@ -1,22 +1,14 @@
-﻿@inject IEncryptionService es;
-@*
-    This is a comment inside of a view
-*@
-@{
-    //you can make C# comments and write C# code in here
-}
-@*
-    Tell the view what type of data is being passed to it from the controller
+﻿@*
+    Tell the view what kind of object to expect - Model
 *@
 @model List<Employee>
-<h2>This is the employee Index Page</h2>
+<h2>This is the employee Index page</h2>
 
-@foreach(Employee e in Model){
-    <p>ID: @e.Id</p>
-    <p>First Name: @e.FirstName</p>
-    <p>Last Name: @e.LastName</p>
-@*    <p>Employee Id: @es.Decrypt(@e.EmployeeId, "ThisIsTheKey")</p>*@
-    <p>Employee @e.EmployeeId</p>
-    <p>Phone: @e.Phone</p>
-    <p>Active @e.Active</p>
+@foreach(Employee employee in Model){
+    <p>ID: @employee.Id</p>
+    <p>First Name: @employee.FirstName</p>
+    <p>Last Name: @employee.LastName</p>
+    <p>Employee Id: @employee.EmployeeId</p>
+    <p>Active: @employee.Active</p>
+    <a asp-action="Details" asp-route-id="@employee.Id">See Details</a>
 }

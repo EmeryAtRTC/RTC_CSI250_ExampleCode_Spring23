@@ -1,0 +1,14 @@
+﻿@inject IDiceRoller _roller
+@*This is like a constructor for the view - You can use C# code*@
+@{
+    int x = _roller.RollDice();
+    int y = _roller.RollDice();
+    int total = x + y;
+}
+<h2>Dice Rolled</h2>
+<p>
+    You rolled a @x and a @y
+</p>
+<p>
+    The total is @total
+</p>

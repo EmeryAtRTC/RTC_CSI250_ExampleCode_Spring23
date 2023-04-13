@@ -1,84 +1,90 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVCBasics.Models;
-using MVCBasics.Services;
 
 namespace MVCBasics.Controllers
 {
-    //A controller is a C# class that inherits from Controller
     public class EmployeeController : Controller
     {
-        //We create a field that matches the data type of the interface
-        IEncryptionService _es;
-        //We can also inject the Configuration object
-        IConfiguration _config;
-
         //fields
         List<Employee> employees;
-        //assign values to fields - Constructor
-        //Special method that runs whenever an instance of our class is created
-        public EmployeeController(IEncryptionService es, IConfiguration config)
+
+        public EmployeeController()
         {
-            //Assign the field to the parameter
-            _es = es;
-            //pull in the config object
-            _config = config;
+            //constructor assigns values to the fields
+            //new up the employee list
             employees = new List<Employee>();
-            //The old way
+            //hard code some employees
             Employee e1 = new Employee();
             e1.Id = 1;
             e1.FirstName = "Will";
             e1.LastName = "Cram";
-            e1.EmployeeId = _es.Encrypt("WC293849", _config["EncryptKey"]);
+            e1.EmployeeId = "WC29183";
             e1.Active = true;
-            e1.Phone = "2064585743";
-            //add employee to the list
+            //add employee to list
             employees.Add(e1);
-            //How to make a new entity model
+            //new syntax
             Employee e2 = new Employee
             {
                 Id = 2,
                 FirstName = "Lhoucine",
                 LastName = "Zerrouki",
-                EmployeeId = _es.Encrypt("LZ237483", _config["EncryptKey"]),
-                Phone = "42584957689",
+                EmployeeId = "LZ23984",
                 Active = true
             };
             employees.Add(e2);
-        }
-        
-        //lets add an endpoint
-        //We hit this endpoint by going to host/Employee/Index
-        //or host/Employee
-        public IActionResult Index()
-        {
-            
-            //Its going to look for a view in /Views/Employee/Index.cshtml
-            //pass our list of employees to the view
-            List<Employee> empList = new List<Employee>();
-            foreach(Employee e in employees)
+            employees.Add(new Employee
             {
-                Employee e2 = e;
-                e2.EmployeeId = _es.Decrypt(e.EmployeeId, "ThisIsMyKey");
-                empList.Add(e2);
-            }
-            return View(empList);
+                Id = 3,
+                FirstName = "Dimpy",
+                LastName = "Gill",
+                EmployeeId = "DG12398",
+                Active = false
+            });
         }
-        //Details - It will send one employee to a view
-        //Details takes in an id and sends the employee that matches the id
-        //This endpoint is going to look for a view in Views/Employee/Details.cshtml
+        //Create an Endpoint
+        //We hit this enpoint with /Employee/Index
+        //Modified our Index Enpoint to filter by active employees
+        public IActionResult Index(bool filterByActive = false)
+        {
+            if (filterByActive)
+            {
+                List<Employee> filteredEmployees = new List<Employee>();
+                foreach(Employee e in employees)
+                {
+                    if (e.Active)
+                    {
+                        filteredEmployees.Add(e);
+                    }
+                }
+                return View(filteredEmployees);
+            }
+            return View(employees);
+        }
+        //Details endpoint that only shows 1 employee
+        //takes in an ID (primary key)
         public IActionResult Details(int id)
         {
-            //loop through employees and find the matching employee
+            //Before we go through the list, lets make sure
+            //id has a value
+            if(id == 0)
+            {
+                //this sends a 404
+                return NotFound();
+            }
+
+            //Check for an employee that matches the id
+            Employee employee;
             foreach(Employee e in employees)
             {
                 if(e.Id == id)
                 {
-                    return View(e);
+                    employee = e;
+                    return View(employee);
                 }
             }
-            //if this loop ends and we did not find an employee
-            //return NotFound()
-            return NotFound();
+            return NotFound();           
         }
+        
+
     }
 }
