@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Album>
+
+<table class="table table-dark table-striped">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Genre
+        </th>
+        <th>
+            Artist
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+    @*loop throw the albums*@
+    @foreach(Album a in Model)
+    {
+        <tr>
+            <th>
+                @a.Title
+            </th>
+            <th>
+                @a.Genre
+            </th>
+            <th>
+                @a.Artist
+            </th>
+            <th>
+                @a.Price
+            </th>
+            <th>
+                coming soon
+            </th>
+        </tr>
+    }
+</table>

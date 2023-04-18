@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LinqDemo.Data
 {
-    public class AlbumList
+    public class AlbumList : IAlbumList
     {
         int idCounter = 1;
         List<Album> albums;
