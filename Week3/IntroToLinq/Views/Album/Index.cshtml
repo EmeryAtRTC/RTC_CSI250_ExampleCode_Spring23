@@ -35,7 +35,11 @@
                 @a.Price
             </th>
             <th>
-                coming soon
+                @*Link that goes to the AlbumController, the Details endpoint and passes the
+                    Id of the Album to the id parameter of the Details method
+                *@
+                <a asp-controller="Album" asp-action="Details" asp-route-id="@a.Id">Details</a> |
+                <a asp-controller="Album" asp-action="Edit" asp-route-id="@a.Id">Edit</a> |
             </th>
         </tr>
     }

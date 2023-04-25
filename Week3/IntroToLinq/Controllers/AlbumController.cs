@@ -46,6 +46,10 @@ namespace IntroToLinq.Controllers
         [HttpPost]
         public IActionResult Create(Album album)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(album);
+            }
             //An album is going to come in here
             //with the information from the form
             album.Id = _albums.Count() + 1;
@@ -54,6 +58,51 @@ namespace IntroToLinq.Controllers
             //Where should we send the user?
             //redirect can send the user to another endpoint
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            //check if anything was passed to id
+            if(id == 0)
+            {
+                return NotFound();
+            }
+            
+            Album a = _albums.SingleOrDefault(a => a.Id == id);
+            //check if the album is null
+            if(a == null)
+            {
+                return NotFound();
+            }
+            //send the album to the view
+            // Views/Album/Edit.cshtml
+            return View(a);
+        }
+        [HttpPost]
+        public IActionResult Edit(Album model)
+        {
+            //We also need to validate all information on the server side
+            //ModelState object - contains information about the model
+            if (!ModelState.IsValid)
+            {
+                //send the user back to the view with the error messages
+                return View(model);
+            }
+            //we need to get the album out of the database
+            Album album = _albums.SingleOrDefault(a => a.Id == model.Id);
+            //check if album is null
+            if(album == null)
+            {
+                return NotFound();
+            }
+            album.Title = model.Title;
+            album.Genre = model.Genre;
+            album.Price = model.Price;
+            album.Artist = model.Artist;
+            //what page should we route them to
+            //Lets route them to details of the album
+            //Album details needs an ID
+            return RedirectToAction("Details", new {id = album.Id});
         }
 
 
