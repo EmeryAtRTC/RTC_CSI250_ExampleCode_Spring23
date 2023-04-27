@@ -1,6 +1,8 @@
 ﻿using IntroToLinq.Models;
 using LinqDemo.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR.Protocol;
 
 namespace IntroToLinq.Controllers
 {
@@ -13,8 +15,42 @@ namespace IntroToLinq.Controllers
             _albums = albumList.GetAlbums();
         }
         //lets add an index - shows us all of the albums
-        public IActionResult Index()
+        public IActionResult Index(string genre, string title)
         {
+            //lets get all of the distinct genres from the database
+            //Select()
+            IEnumerable<string> genres = _albums.Select(x => x.Genre).Distinct();
+            //What I need is a collection of SelectListItem
+            //SelectListItem has two properties
+            //Text, Value, Selected
+            IEnumerable<SelectListItem> selectList = genres.Select(x => new SelectListItem
+            {
+                Text = x,
+                Value = x,
+                Selected = x == genre
+            });
+            //There is a collection called the ViewBag
+            //It is automatically sent to every view
+            //Add my selectList to the ViewBag
+            ViewBag.genreList = selectList;
+
+            //Check to see if genre was passed a value
+            if (!String.IsNullOrEmpty(genre))
+            {
+                //we can filter on genre
+                //How do I filter the collection of album 
+                //for multiple results use where
+                IEnumerable<Album> filteredAlbums = _albums.Where(x => x.Genre == genre);
+                return View(filteredAlbums);
+            }
+            //Check to see if a title was passed
+            if (!String.IsNullOrEmpty(title))
+            {
+                //filter on the title
+                IEnumerable<Album> filteredAlbums = _albums.Where(x => x.Title.ToLower().Contains(title.ToLower()));
+                return View(filteredAlbums);
+            }
+            
             return View(_albums);
         }
         //lets try to add details - details takes an id and shows one album
