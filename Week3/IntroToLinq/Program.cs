@@ -1,4 +1,4 @@
-using LinqDemo.Data;
+using IntroToLinq.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 //Add the albumList to services
 builder.Services.AddSingleton<IAlbumList, AlbumList>();
+builder.Services.AddSingleton<IPublisherList, PublisherList>();
 
 var app = builder.Build();
 

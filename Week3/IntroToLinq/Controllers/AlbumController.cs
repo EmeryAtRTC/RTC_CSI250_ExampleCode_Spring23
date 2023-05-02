@@ -1,5 +1,5 @@
 ﻿using IntroToLinq.Models;
-using LinqDemo.Data;
+using IntroToLinq.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR.Protocol;
@@ -9,10 +9,12 @@ namespace IntroToLinq.Controllers
     public class AlbumController : Controller
     {
         List<Album> _albums;
+        List<Publisher> _publishers;
 
-        public AlbumController(IAlbumList albumList)
+        public AlbumController(IAlbumList albumList, IPublisherList publisherList)
         {
             _albums = albumList.GetAlbums();
+            _publishers = publisherList.GetPublishers();
         }
         //lets add an index - shows us all of the albums
         public IActionResult Index(string genre, string title)
@@ -41,6 +43,12 @@ namespace IntroToLinq.Controllers
                 //How do I filter the collection of album 
                 //for multiple results use where
                 IEnumerable<Album> filteredAlbums = _albums.Where(x => x.Genre == genre);
+                //Go through the list of publishers a populate the Publisher property
+                foreach (Album a in _albums)
+                {
+                    //Assign the publisher property to the publisher that we load from the publishers list
+                    a.Publisher = _publishers.SingleOrDefault(x => x.Id == a.PublisherId);
+                }
                 return View(filteredAlbums);
             }
             //Check to see if a title was passed
@@ -48,16 +56,28 @@ namespace IntroToLinq.Controllers
             {
                 //filter on the title
                 IEnumerable<Album> filteredAlbums = _albums.Where(x => x.Title.ToLower().Contains(title.ToLower()));
+                //Go through the list of publishers a populate the Publisher property
+                foreach (Album a in filteredAlbums)
+                {
+                    //Assign the publisher property to the publisher that we load from the publishers list
+                    a.Publisher = _publishers.SingleOrDefault(x => x.Id == a.PublisherId);
+                }
                 return View(filteredAlbums);
             }
-            
+
+            //Go through the list of publishers a populate the Publisher property
+            foreach (Album a in _albums)
+            {
+                //Assign the publisher property to the publisher that we load from the publishers list
+                a.Publisher = _publishers.SingleOrDefault(x => x.Id == a.PublisherId);
+            }
             return View(_albums);
         }
         //lets try to add details - details takes an id and shows one album
         public IActionResult Details(int id)
         {
             //checking if anything came into the id
-            if(id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -66,7 +86,7 @@ namespace IntroToLinq.Controllers
             //This will get us one album that matches the id
             //or null if nothing matches
             Album album = _albums.SingleOrDefault(a => a.Id == id);
-            if(album == null)
+            if (album == null)
             {
                 return NotFound();
             }
@@ -99,14 +119,14 @@ namespace IntroToLinq.Controllers
         public IActionResult Edit(int id)
         {
             //check if anything was passed to id
-            if(id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
-            
+
             Album a = _albums.SingleOrDefault(a => a.Id == id);
             //check if the album is null
-            if(a == null)
+            if (a == null)
             {
                 return NotFound();
             }
@@ -127,7 +147,7 @@ namespace IntroToLinq.Controllers
             //we need to get the album out of the database
             Album album = _albums.SingleOrDefault(a => a.Id == model.Id);
             //check if album is null
-            if(album == null)
+            if (album == null)
             {
                 return NotFound();
             }
@@ -138,9 +158,60 @@ namespace IntroToLinq.Controllers
             //what page should we route them to
             //Lets route them to details of the album
             //Album details needs an ID
-            return RedirectToAction("Details", new {id = album.Id});
+            return RedirectToAction("Details", new { id = album.Id });
         }
-
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            //we use the ID to pull the album from the database
+            Album a = _albums.SingleOrDefault(x => x.Id == id);
+            //then we check if the album is null
+            if (a is null)
+            {
+                return NotFound();
+            }
+            //if we make it down here we know that we got an album from the database
+            return View(a);
+        }
+        [HttpPost]
+        public IActionResult Delete(Album album)
+        {
+            if(album.Id == 0)
+            {
+                return NotFound();
+            }
+            //we pull the album to delete from the database
+            Album albumToDelete = _albums.SingleOrDefault(x => x.Id == album.Id);
+            //we check for null
+            if(album is null)
+            {
+                return NotFound();
+            }
+            //now we are ready to delete
+            _albums.Remove(albumToDelete);
+            //redirect to the index view
+            return RedirectToAction("Index");
+        }
+        public IActionResult AlbumsByPublisher(int publisherId)
+        {
+            //IEnumerable<album> where the publiserId matches what came in here
+            IEnumerable<Album> filteredAlbums = _albums.Where(x => x.PublisherId == publisherId).Select(a => new Album
+            {
+                Id = a.Id,
+                Artist = a.Artist,
+                Price = a.Price,
+                Genre = a.Genre,
+                PublisherId = a.PublisherId,
+                Title = a.Title,
+                //Population this navigation property
+                Publisher = _publishers.SingleOrDefault(p => p.Id == publisherId)
+            });
+            return Json(filteredAlbums);
+        }
 
     }
 }

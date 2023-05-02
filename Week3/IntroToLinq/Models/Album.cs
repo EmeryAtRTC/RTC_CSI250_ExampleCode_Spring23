@@ -1,26 +1,37 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IntroToLinq.Models
 {
     public class Album
     {
-        //This sets ID as the primary key
+        //If property is named Id
+        //.Net assumes this is the primary key
         [Key]
         public int Id { get; set; }
-        //This means the Title property has to have a value
+        //This means they have to type an album title
         [Required(ErrorMessage = "Album Title cannot be blank")]
-        //Display attribute
-        //This is when you want a property to show up as a different name to the user
         [Display(Name = "Album Title")]
         public string Title { get; set; }
-        [MinLength(3, ErrorMessage = "Artist must be atleast 3 characters")]
+        [StringLength(50, ErrorMessage = "Artist cannot be more than 50 characters")]
         public string Artist { get; set; }
         [Required(ErrorMessage = "Genre cannot be blank")]
-        [StringLength(20, ErrorMessage = "Genre cannot be more than 20 characters")]
         public string Genre { get; set; }
-        [Display(Name = "Album Price")]
         [Required(ErrorMessage = "Price cannot be blank")]
-        [Range(0, 999.99, ErrorMessage = "Price must be between 0 and 999.99")]
+        //This means price can have 5 total digits and two past the decimal point
+        [Column(TypeName = "decimal(5, 2)")]
+        //Range Attribute takes a starting and an upperbound and it will check
+        //that Price is in this range
+        [Range(0, 999.99)]
         public decimal Price { get; set; }
+        //This represents a foreign key in the Album Table
+        //This is one to many relationship
+        public int PublisherId { get; set; }
+        //I can add an instance of publisher here
+        //This property does not exist in the database, it only here to make our lives easier
+        //When loading data
+        //Navigation Properties
+        public Publisher Publisher { get; set; }
     }
 }

@@ -1,0 +1,21 @@
+﻿@model Album
+
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title text-danger">Are you sure yu want to delete</h5>
+        <p class="card-text text-danger">Delete is permanent, this cannot be undone.</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">@Model.Artist</li>
+        <li class="list-group-item">@Model.Title</li>
+        <li class="list-group-item">@Model.Genre - @Model.Price</li>
+    </ul>
+    <div class="card-body">
+        <a asp-action="Index" asp-controller="Album" class="btn btn-outline-primary">Back to album list</a>
+        <form asp-action="Delete" method="post">
+            @*To delete an album we need the ID*@
+            <input asp-for="Id" hidden />
+            <input class="btn btn-outline-danger" type="submit" value="Delete this Album" />
+        </form>
+    </div>
+</div>
