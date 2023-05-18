@@ -44,6 +44,29 @@ namespace CodeFirst.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("Courses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Credits = 5,
+                            DepartmentId = 1,
+                            Title = "Programming I"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Credits = 5,
+                            DepartmentId = 2,
+                            Title = "Project Management"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Credits = 5,
+                            DepartmentId = 3,
+                            Title = "Calculus I"
+                        });
                 });
 
             modelBuilder.Entity("CodeFirst.Models.Department", b =>
@@ -60,6 +83,23 @@ namespace CodeFirst.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "IT"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Business"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Math"
+                        });
                 });
 
             modelBuilder.Entity("CodeFirst.Models.Enrollment", b =>
@@ -74,7 +114,7 @@ namespace CodeFirst.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Grade")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(5, 2)");
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
@@ -97,16 +137,21 @@ namespace CodeFirst.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("StudentIdNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
 

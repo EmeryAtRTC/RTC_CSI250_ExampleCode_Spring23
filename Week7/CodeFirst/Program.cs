@@ -8,7 +8,8 @@ builder.Services.AddControllersWithViews();
 //register my dbcontext with services
 builder.Services.AddDbContext<SchoolDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDbConnection"));
+    //EnableSenstitive data logging lets you see the generated SQL in the console
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolDbConnection")).EnableSensitiveDataLogging();
 });
 
 var app = builder.Build();
