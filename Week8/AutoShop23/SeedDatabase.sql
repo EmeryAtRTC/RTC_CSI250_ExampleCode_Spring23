@@ -21,16 +21,17 @@ VALUES
     ('William', 'Davis', '555-987-6543', 0),
     ('Mia', 'Wilson', '111-222-3333', 1),
     ('Alexander', 'Miller', '444-555-6666', 0);
+INSERT INTO TechnicianStatuses ([Status]) VALUES ('Full-Time'),('Part-Time'),('Terminated'); 
 --This seeds the technician table
-INSERT INTO Technicians (FirstName, LastName, EmployeeNumber)
+INSERT INTO Technicians (FirstName, LastName, EmployeeNumber, TechnicianStatusId)
 VALUES
-    ('Mark', 'Johnson', '123456789'),
-    ('Emily', 'Williams', '987654321'),
-    ('Christopher', 'Brown', '555888777'),
-    ('Laura', 'Thompson', '111222333'),
-    ('Benjamin', 'Anderson', '444555666'),
-    ('Victoria', 'Harris', '777888999'),
-    ('Jonathan', 'Taylor', '222333444'),
-    ('Sophia', 'Lewis', '555444333'),
-    ('Alexander', 'Walker', '999888777'),
-    ('Olivia', 'Martin', '666555444');
+    ('Mark', 'Johnson', '123456789', 1),
+    ('Emily', 'Williams', '987654321', 2),
+    ('Christopher', 'Brown', '555888777', 3),
+    ('Laura', 'Thompson', '111222333', 2),
+    ('Benjamin', 'Anderson', '444555666', 1),
+    ('Victoria', 'Harris', '777888999', 3),
+    ('Jonathan', 'Taylor', '222333444', 3),
+    ('Sophia', 'Lewis', '555444333', 2),
+    ('Alexander', 'Walker', '999888777', 2),
+    ('Olivia', 'Martin', '666555444', 1);

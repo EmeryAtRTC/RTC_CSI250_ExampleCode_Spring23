@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Technician>
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TechnicianStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (Technician technician in Model) {
+        <tr>
+            <td>
+                @technician.FirstName
+            </td>
+            <td>
+                @technician.LastName
+            </td>
+            <td>
+                @technician.EmployeeNumber
+            </td>
+            <td>
+                @technician.TechnicianStatus.Status
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@technician.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@technician.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@technician.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

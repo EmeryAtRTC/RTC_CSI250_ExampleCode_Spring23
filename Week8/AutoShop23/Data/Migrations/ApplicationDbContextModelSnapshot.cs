@@ -104,9 +104,30 @@ namespace AutoShop23.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<int>("TechnicianStatusId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("TechnicianStatusId");
+
                     b.ToTable("Technicians");
+                });
+
+            modelBuilder.Entity("AutoShop23.Models.TechnicianStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TechnicianStatuses");
                 });
 
             modelBuilder.Entity("AutoShop23.Models.Vehicle", b =>
@@ -363,6 +384,17 @@ namespace AutoShop23.Data.Migrations
                     b.Navigation("Vehicle");
                 });
 
+            modelBuilder.Entity("AutoShop23.Models.Technician", b =>
+                {
+                    b.HasOne("AutoShop23.Models.TechnicianStatus", "TechnicianStatus")
+                        .WithMany("Technicians")
+                        .HasForeignKey("TechnicianStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TechnicianStatus");
+                });
+
             modelBuilder.Entity("AutoShop23.Models.Vehicle", b =>
                 {
                     b.HasOne("AutoShop23.Models.Customer", "Customer")
@@ -433,6 +465,11 @@ namespace AutoShop23.Data.Migrations
             modelBuilder.Entity("AutoShop23.Models.Technician", b =>
                 {
                     b.Navigation("ServicesPerformed");
+                });
+
+            modelBuilder.Entity("AutoShop23.Models.TechnicianStatus", b =>
+                {
+                    b.Navigation("Technicians");
                 });
 
             modelBuilder.Entity("AutoShop23.Models.Vehicle", b =>

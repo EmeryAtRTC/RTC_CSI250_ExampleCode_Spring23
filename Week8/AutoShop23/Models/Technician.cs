@@ -18,9 +18,13 @@ namespace AutoShop23.Models
         //This means that this will always be exactly 9 characters
         [StringLength(9, MinimumLength = 9)]
         public string EmployeeNumber { get; set; }
+        //foreign key to technicianstatus Id
+        public int TechnicianStatusId { get; set; }
+
         //navigation properties
         //each technician has multiple serviceperformed
         public IEnumerable<ServicePerformed> ServicesPerformed { get; set; }
+        public TechnicianStatus TechnicianStatus { get; set; }
 
     }
 }

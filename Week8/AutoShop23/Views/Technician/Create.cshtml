@@ -1,0 +1,50 @@
+﻿@model TechCreateVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Technician</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmployeeNumber" class="control-label"></label>
+                <input asp-for="EmployeeNumber" class="form-control" />
+                <span asp-validation-for="EmployeeNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TechnicianStatusId" class="control-label"></label>
+                <select asp-for="TechnicianStatusId" class ="form-control" asp-items="@Model.TechStatusList"></select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-primary p-2 mt-2">Create <i class="fa-solid fa-square-plus"></i></button>
+                <a asp-controller="Technician" asp-action="Index" class="btn btn-outline-warning p-2 mt-2">
+                    Back to list <i class="fa-solid fa-square-caret-left"></i>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

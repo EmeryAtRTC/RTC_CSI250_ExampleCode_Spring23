@@ -16,5 +16,6 @@ namespace AutoShop23.Data
         public DbSet<Technician> Technicians { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<ServicePerformed> ServicesPerformed { get; set; }
+        public DbSet<TechnicianStatus> TechnicianStatuses { get; set; }
     }
 }
