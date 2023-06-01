@@ -24,6 +24,7 @@ namespace AutoShop23.Controllers
             //navigation property to technician status
             //what this is going to do. It is going to pull the record
             //from technicianstatus and place it in the navigation property
+            //You only have access to Include when dealing with a collection
             IEnumerable<Technician> technicians = _context.Technicians.Include(x => x.TechnicianStatus);
             return View(technicians);
         }
@@ -73,6 +74,26 @@ namespace AutoShop23.Controllers
             _context.Technicians.Add(technician);
             _context.SaveChanges();
             return RedirectToAction("Index");
+        }
+        //Details endpoint
+        public IActionResult Details(int  id)
+        {
+            if(id == 0)
+            {
+                return NotFound();
+            }
+            Technician technician = _context.Technicians.SingleOrDefault(x => x.Id == id);
+            if(technician == null)
+            {
+                return NotFound();
+            }
+            //Pulling the technicianstatus for our techncian and passing it to view
+            //using the navigation property
+            //If you have one instance of an entity and need to populate a naviation property
+            //you do it by hand
+            technician.TechnicianStatus = _context.TechnicianStatuses.
+                SingleOrDefault(x => x.Id == technician.TechnicianStatusId);
+            return View(technician);
         }
     }
 }
