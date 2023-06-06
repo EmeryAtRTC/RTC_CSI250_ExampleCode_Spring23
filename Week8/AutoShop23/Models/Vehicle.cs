@@ -25,6 +25,7 @@ namespace AutoShop23.Models
         public string VIN { get; set; }
         //We arent storing the actual image
         //we are storing a link to it (string)
+        [Display(Name ="Vehicle Image")]
         [StringLength(100)]
         public string ImageLocation { get; set; }
         //navigation properties

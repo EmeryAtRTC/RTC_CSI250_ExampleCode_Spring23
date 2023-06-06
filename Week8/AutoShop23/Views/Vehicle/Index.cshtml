@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Vehicle>
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Make)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mileage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VIN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Vehicle vehicle in Model)
+        {
+            <tr>
+                <td>
+                    @vehicle.Make
+                </td>
+                <td>
+                    @vehicle.Model
+                </td>
+                <td>
+                    @vehicle.Year
+                </td>
+                <td>
+                    @vehicle.Mileage
+                </td>
+                <td>
+                    @vehicle.VIN
+                </td>
+                <td>
+                    <img class="vehicle-image" src="/Images/@vehicle.ImageLocation" alt="" />
+                </td>
+                <td>
+                    @vehicle.Customer.FirstName @vehicle.Customer.LastName
+                </td>
+                <td>
+                    <a asp-action="Create" asp-controller="Vehicle" asp-route-customerId="@vehicle.CustomerId">Create Vehicle</a>
+                    <a asp-action="Edit" asp-route-id="@vehicle.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@vehicle.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@vehicle.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
