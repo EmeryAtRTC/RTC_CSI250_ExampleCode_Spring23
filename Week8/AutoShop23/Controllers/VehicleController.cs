@@ -107,11 +107,6 @@ namespace AutoShop23.Controllers
             }
             return "";
         }
-        [Authorize]
-        public IActionResult CheckUser()
-        {
-            return Json(_userManager.Users);
-        }
 
     }
 }
