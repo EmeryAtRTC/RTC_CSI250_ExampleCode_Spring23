@@ -12,14 +12,12 @@ namespace AutoShop23.Controllers
     {
         ApplicationDbContext _context;
         IWebHostEnvironment _environment;
-        UserManager<IdentityUser> _userManager;
+        
 
-        public VehicleController(ApplicationDbContext context, IWebHostEnvironment environment, 
-            UserManager<IdentityUser> userManager)
+        public VehicleController(ApplicationDbContext context, IWebHostEnvironment environment)
         {
             _context = context;
             _environment = environment;
-            _userManager = userManager;
         }
 
         //In order to create a vehicle, we have to have a customer
@@ -85,6 +83,20 @@ namespace AutoShop23.Controllers
             IEnumerable<Vehicle> vehicles = _context.Vehicles.Include(x=>x.Customer);
             return View(vehicles);
         }
+        public IActionResult Details(int id)
+        {
+            if(id == 0)
+            {
+                return NotFound();
+            }
+            Vehicle vehicle = _context.Vehicles.FirstOrDefault(x => x.Id == id);
+            if(vehicle == null)
+            {
+                return NotFound();
+            }
+            return View(vehicle);
+        }
+
         //lets make a method that takes a file, gives it a random file name
         //saves the file and returns the new filename as a string
         private string SaveUploadedFile(IFormFile file)

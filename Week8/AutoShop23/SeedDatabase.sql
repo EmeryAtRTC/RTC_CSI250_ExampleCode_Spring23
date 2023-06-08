@@ -35,3 +35,9 @@ VALUES
     ('Sophia', 'Lewis', '555444333', 2),
     ('Alexander', 'Walker', '999888777', 2),
     ('Olivia', 'Martin', '666555444', 1);
+
+INSERT INTO ServiceStatuses([Status])
+VALUES ('New'),
+       ('In-Progress'),
+       ('Pending Customer'),
+       ('Completed');
